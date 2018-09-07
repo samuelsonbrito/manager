@@ -9,10 +9,15 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Sauim\\Framework\\": "src"
+            "Sauim\\Framework\\": "src",
+            "App\\":"app"
         }
     },
     "scripts": {
         "server": "php -S localhost:8080"
+    },
+
+    "config": {
+        "process-timeout": 0
     }
 }
