@@ -7,7 +7,9 @@
         }
     ],
     "require": {
-        "pimple/pimple": "^3.2"
+        "pimple/pimple": "^3.2",
+        "symfony/http-foundation": "^4.1",
+        "zendframework/zend-eventmanager": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -16,7 +18,7 @@
         }
     },
     "scripts": {
-        "server": "php -S localhost:8080"
+        "server": "php -S localhost:8080 -t public"
     },
 
     "config": {
