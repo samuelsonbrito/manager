@@ -4,17 +4,22 @@ require __DIR__.'/vendor/autoload.php';
 
 $router = new Sauim\Framework\Router;
 
-$router->add('GET','/', function(){
-    return 'Estamos no menu principal';
-});
-
-$router->add('GET','/produtos/(\d+)', function($params){
-    var_dump($params);
-    return 'Estamos no menu produtos';
-});
+require __DIR__.'/config/containers.php';
+require __DIR__.'/config/routes.php';
 
 try{
-    echo $router->run();
+
+    $result = $router->run();
+
+    $response = new Sauim\Framework\Response;
+
+    $params = [
+        'container' => $container,
+        'params' => $result['params']
+    ];
+
+    $response($result['action'], $params);
+
 } catch(\Sauim\Framework\Exceptions\HttpException $e){
     echo json_encode(['error' => $e->getMessage()]);
 }

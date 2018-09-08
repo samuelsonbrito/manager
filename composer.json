@@ -6,7 +6,9 @@
             "email": "samuelsonma@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "pimple/pimple": "^3.2"
+    },
     "autoload": {
         "psr-4": {
             "Sauim\\Framework\\": "src",
