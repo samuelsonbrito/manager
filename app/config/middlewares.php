@@ -1,9 +1,9 @@
 <?php 
 
 $app->middleware('before', function(){
-    echo 'before';
+    //echo 'before';
 });
 
 $app->middleware('after', function(){
-    echo 'depois';
+    //echo 'depois';
 });
