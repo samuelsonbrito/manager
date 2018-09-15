@@ -6,13 +6,15 @@ use App\Models\Users;
 
 class UsersController
 {
-    public function index($container, $request)
+    public function index($container)
     {   
-        return '';
+        $user = new Users($container);
+        return $user->all();
     }
 
     public function show($container, $request)
     {   
+        $user = new Users($container);
         return $user->get($request->attributes->get(1));
     }
 
@@ -24,11 +26,13 @@ class UsersController
     
     public function update($container, $request)
     {   
-        return '';
+        $user = new Users($container);
+        return $user->update($request->attributes->get(1), $request->request->all());
     }
 
     public function delete($container, $request)
     {   
-        return '';
+        $user = new Users($container);
+        return $user->delete($request->attributes->get(1));
     }
 }

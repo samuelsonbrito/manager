@@ -1,9 +1,9 @@
 <?php 
 
 $app->middleware('before', function(){
-    //echo 'before';
+    session_start();
 });
 
-$app->middleware('after', function(){
-    //echo 'depois';
+$app->middleware('before', function(){
+    header('Content-Type: application/json');
 });
