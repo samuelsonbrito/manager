@@ -17,7 +17,6 @@ class Model
         $this->db = $container['db'];
         $this->events = $container['events'];
         $this->queryBuilder = new QueryBuilder;
-
     }
 
     public function get(array $conditions)
@@ -29,12 +28,13 @@ class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function all()
+    public function all(array $conditions =[])
     {
-        $stmt = $this->db->prepare("SELECT * FROM {$this->table}");
-        $stmt->execute();
+        $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);e
     }
 
     public function create(array $data)
