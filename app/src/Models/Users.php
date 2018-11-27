@@ -3,81 +3,9 @@
 namespace App\Models;
 
 use Pimple\Container;
+use Sauim\Framework\QueryBuilder;
 
-class Users 
+class Users extends Model
 {
-    private $db;
-
-    public function __construct(Container $container)
-    {
-        $this->db = $container['db'];
-        $this->events = $container['events'];
-    }
-
-    public function get($id)
-    {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE id = ?');
-        $stmt->execute([$id]);
-
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
-    }
-
-    public function all()
-    {
-        $stmt = $this->db->prepare('SELECT * FROM users');
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public function create(array $data)
-    {
-        $this->events->trigger('creating.users', null, $data);
-
-        $queryBuilder = new \Sauim\Framework\QueryBuilder;
-
-        $query = $queryBuilder->insert('users', $data)->getData();
-
-        $stmt = $this->db->prepare($query->sql);
-        $stmt->execute($query->bind);
-
-        $result = $this->get($this->db->lastInsertId());
-
-        $this->events->trigger('created.users', null, $result);
-
-        return $result;
-    }
-
-    public function update($id, array $data)
-    {
-        $this->events->trigger('updating.users', null, $data);
-
-        $sql = 'UPDATE users SET name = ? WHERE id = ? ';
-
-        $data = array_merge($data, [$id]);
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array_values($data));
-
-        $result = $this->get($id);
-
-        $this->events->trigger('updated.users', null, $result);
-
-        return $result;
-    }
-
-    public function delete($id)
-    {
-        $result = $this->get($id);
-        
-        $this->events->trigger('deleting.users', null, $result);
-
-        $sql = 'DELETE FROM users WHERE id = ?';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-
-        $this->events->trigger('deleted.users', null, $result);
-
-        return $result;
-    }
+    
 }
